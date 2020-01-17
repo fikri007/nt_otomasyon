@@ -335,6 +335,7 @@ bool dnsAyarYapildi = false;
 
 
 void loop(void) {
+  /* Wifi Bağlantısı Kontrol Ediliyor Eğer bağlanmamışsa */
   if (wifiMulti.run() != WL_CONNECTED) {
     Serial.println("WiFi Hala Bağlanamadı!");
     delay(1000);
