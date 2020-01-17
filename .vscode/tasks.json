@@ -1,0 +1,85 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Fiko Sanic Run Server",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "windows": {
+                "command": "${config:python.pythonPath} ./server/sapp.py"
+            },
+            "presentation": {
+                "group": "Fiko Server",
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Fiko Çalıştır Veritabanı",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}/../VT-NT/"
+            },
+            "windows": {
+                "command": "..\\VT\\baslat.bat"
+            },
+            "presentation": {
+                "group": "Fiko Server"
+            },
+            "problemMatcher": []
+        },
+        {
+            "dependsOn": [
+                "Fiko Sanic Run Server",
+                "Fiko Çalıştır Veritabanı",
+            ],
+            "label": "Fiko Server Komple Çalıştır",
+            "type": "process",
+            "command": "",
+            "options": {
+                "cwd": "${workspaceFolder}/"
+            },
+            "presentation": {
+                "group": "Fiko Server"
+            },
+            "problemMatcher": []
+        },
+    ],
+    "inputs": [
+        {
+            "id": "bilesenIsmi",
+            "description": "Bileşen İsmi",
+            "default": "",
+            "type": "promptString"
+        },
+        {
+            "id": "routing",
+            "description": "Route Modülü Olsun Mu",
+            "default": "true",
+            "type": "promptString"
+        },
+        {
+            "id": "entryComponent",
+            "description": "Bileşen Entry Edilsinmi",
+            "default": "false",
+            "type": "promptString"
+        },
+        {
+            "id": "klasor",
+            "description": "Klasör Yolu",
+            "default": ".",
+            "type": "promptString"
+        },
+        {
+            "id": "modul",
+            "description": "Yüklenecek Modül İsmi",
+            "default": "",
+            "type": "promptString"
+        },
+    ]
+}

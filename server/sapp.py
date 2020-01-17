@@ -21,7 +21,7 @@ uri = "mongodb://127.0.0.1:27017"
 app = Sanic('motor_mongodb')
 app.config.update({
     "MONGODB_DATABASE": "fikoyt", # Make ensure that the `app` database is really exists
-    "MONGODB_URI": "mongodb://localhost:27017",
+    "MONGODB_URI": "mongodb://localhost:20017",
     "LAZY_UMONGO": MotorAsyncIOInstance(),
     "REQUEST_MAX_SIZE":1073741824
 })
@@ -62,14 +62,24 @@ class Artist(Document):
 @app.route("/")
 async def handle(request):
     """ Kök Url """
-    artist = Artist(name="A new rockstar!",toplam_sayi=await app.vt.fikoyt.artist.count_documents({}))
-    await artist.commit()
-    data = await app.vt.fikoyt.artist.find().to_list(5000)
-    for x in data:
-        x['id'] = str(x['_id'])
-        del x['_id']
+    # artist = Artist(name="A new rockstar!",toplam_sayi=await app.vt.fikoyt.artist.count_documents({}))
+    # await artist.commit()
+    # data = await app.vt.fikoyt.artist.find().to_list(5000)
+    # for x in data:
+    #     x['id'] = str(x['_id'])
+    #     del x['_id']
     
-    return response.json(data)
+    return response.text("FikoYT Otomasyon Sistemi")
+
+ # BİLGİ:  Kök Url
+@app.route("/nt_otom", methods=["POST",])
+async def Mcu(request):
+    """ 
+    YAP: 
+      Node Mcu dan Gelen Bilgiler Burada Dinlenecek Veritabanına Kayıt Buradan Yapılacak
+    """
+    print(request.body)
+    return response.text("Gelen Form Bilgisi: %s" % request.body)
 
 # BİLGİ:  Server Başlamadan Önce 
 @app.listener('before_server_start')

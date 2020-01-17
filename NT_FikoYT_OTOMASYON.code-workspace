@@ -1,0 +1,153 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+
+		"todohighlight.isEnable": true,
+		"todohighlight.isCaseSensitive": true,
+		"todohighlight.keywords": [
+			{
+				"text": " YAP: ",
+				"color": "white",
+				"backgroundColor": "blue",
+				"overviewRulerColor": "black",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " YAPILDI: ",
+				"color": "white",
+				"backgroundColor": "darkgreen",
+				"overviewRulerColor": "black",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " NOT: ",
+				"color": "black",
+				"backgroundColor": "yellowgreen",
+				"overviewRulerColor": "black",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " ONAR: ",
+				"color": "#fff",
+				"backgroundColor": "#f55aa8",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " HATA: ",
+				"color": "#fff",
+				"backgroundColor": "red",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " SİL: ",
+				"color": "#fff",
+				"backgroundColor": "rgb(210, 105, 30)",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " FİKİR: ",
+				"color": "#000",
+				"backgroundColor": "orange",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			},
+			{
+				"text": " BİLGİ: ",
+				"color": "#000",
+				"backgroundColor": "aqua",
+				"isWholeLine": false,
+				"cursor": "pointer",
+				"border": "1px solid #eee",
+				"borderRadius": "2px",
+				"whiteSpace": "5px"
+			}, 
+			{
+				"text": " AYRAÇ: ",
+				"color": "#fff",
+				"backgroundColor": "black",
+				"isWholeLine": true,
+				"overviewRulerColor": "green",
+				"cursor": "pointer",
+				"border": "1px dashed yellow",
+				"borderRadius": "0px",
+			},
+			{
+				"text": "console.log",
+				"color": "#000",
+				"backgroundColor": "orange",
+				"isWholeLine": false,
+				"overviewRulerColor": "orange",
+				"cursor": "pointer",
+				"border": "1px solid yellow",
+				"borderRadius": "0.5em",
+			},
+			{
+				"text": "print(",
+				"color": "#000",
+				"backgroundColor": "orange",
+				"isWholeLine": false,
+				"overviewRulerColor": "orange",
+				"cursor": "pointer",
+				"border": "1px solid yellow",
+				"borderRadius": "0.5em",
+			}
+		],
+		"todohighlight.defaultStyle": {},
+		"todohighlight.include": [
+			"**/*.js",
+			"**/*.jsx",
+			"**/*.ts",
+			"**/*.tsx",
+			"**/*.html",
+			"**/*.php",
+			"**/*.css",
+			"**/*.scss"
+		],
+		"todohighlight.exclude": [
+			"**/node_modules/**",
+			"**/bower_components/**",
+			"**/dist/**",
+			"**/build/**",
+			"**/.vscode/**",
+			"**/.github/**",
+			"**/_output/**",
+			"**/*.min.*",
+			"**/*.map",
+			"**/.next/**"
+		],
+		"todohighlight.maxFilesForSearch": 5120,
+		"todohighlight.toggleURI": false,
+
+	}
+}

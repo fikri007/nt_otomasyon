@@ -4,6 +4,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WiFiMulti.h>
 #include <ESP8266WebServer.h>
+#include <ESP8266HTTPClient.h> 
 #include <ESP8266mDNS.h>
 #include <DNSServer.h>
 #include <time.h>
@@ -183,9 +184,9 @@ String jsonRtrn(void) {
   html += "D7:";
   html += !durumD7 ? "true," : "false,";
   html += "analog:";
-  html += (String)analogRead(A0) + ",";
-  html += "ip:";
-  html += "'" + (String)WiFi.localIP().toString() + "'";
+  html += (String)analogRead(A0);
+  // html += "ip:";
+  // html += "'" + (String)WiFi.localIP().toString() + "'";
   html += "}";
   /* İstemciye Gönderiliyor */
   return html;
@@ -290,6 +291,11 @@ void setup(void) {
     Serial.println(WiFi.localIP());
   }
 
+ while (wifiMulti.run() != WL_CONNECTED){
+  delay(500);
+  Serial.println(".");
+  }
+
   dnsServer.setTTL(300);
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
   dnsServer.start(53, "*", IPAddress(192, 168, 4, 1));
@@ -326,32 +332,64 @@ void setup(void) {
   //webSocket.beginSSL("192.168.1.100", 91, "socket.io/?EIO=3&transport=websocket", "7af49b92aa04ba5fdcf885dfd76269dd4578ce6a" );
 }
 
+/*
+  NOT:  Sunucuya Gönderen Fonksiyon 
+*/
+void gonderBilgi(void){
+  const char* host = "http://192.168.2.137"; //edit the host adress, ip address etc. 
+  String url = "/nt_otom/"; 
+  int adcvalue=0;
+  /**/
+  WiFiClient client; 
+  const int httpPort = 80; 
+  // if (!client.connect(host, httpPort)) { 
+  //     Serial.println("Bağlantı Sağlanamadı"); 
+  //     return;
+  // }
+    /**/
+    String postData = String(jsonRtrn()); 
+    String address = host + url; 
+    HTTPClient http; 
+    http.begin(address); 
+    http.addHeader("Content-Type", "application/json"); 
+    auto httpCode = http.POST(postData); 
+    Serial.println(httpCode); //Print HTTP return code 
+    String payload = http.getString(); 
+    Serial.println(payload); //Print request response payload 
+    http.end(); //Close connection Serial.println(); 
+    Serial.println("closing connection"); 
+
+delay(100);
+}
+
 /* Led Modu İçin Zaman Takip Değişkenleri */
 unsigned long ledOncekiZaman = 0;        // Önceki Zaman Kaydediliyor Farkı Bulmak İçin
 const long ledTekrarSure = 500;          // Tekrar Edilecek Saniye (milliSaniye)
 int ledDurum = KAPALI;                // Performans Açısından Böyle Uygun Gibi
 bool dnsAyarYapildi = false;
-
-
+String oncekiBilgiler=jsonRtrn();
 
 void loop(void) {
+
+  if (!oncekiBilgiler.equals(jsonRtrn())){
+    oncekiBilgiler=jsonRtrn();
+    Serial.println(jsonRtrn());
+    gonderBilgi();
+  }
+
   /* Wifi Bağlantısı Kontrol Ediliyor Eğer bağlanmamışsa */
   if (wifiMulti.run() != WL_CONNECTED) {
     Serial.println("WiFi Hala Bağlanamadı!");
     delay(1000);
   }
-
-  if (!dnsAyarYapildi) {
-    if (wifiMulti.run() == WL_CONNECTED) {
-      /*
-        dnsServer.setTTL(300);
-        dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
-        dnsServer.start(80, "fikoyt.com", WiFi.localIP());
-      */
-      Serial.println(WiFi.localIP());
-      dnsAyarYapildi = true;
-    }
-  }
+//
+//   if (!dnsAyarYapildi) {
+//     if (wifiMulti.run() == WL_CONNECTED) {
+//         dnsServer.start(53, "fikoyt.com", IPAddress(192,168,4,1));
+//       Serial.println(WiFi.localIP());
+//       dnsAyarYapildi = true;
+//     }
+//   }
 
   /**/
   unsigned long simdikiZaman = millis();// Şimdiki zaman Alınıyor
