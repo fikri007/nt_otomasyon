@@ -147,11 +147,48 @@ void json(void) {
   html += "D7:";
   html += !durumD7 ? "true," : "false,";
   html += "analog:";
-  html += (String)analogRead(A0);
+  html += (String)analogRead(A0) + ",";
+  html += "ip:";
+  html += "'" + (String)WiFi.localIP().toString() + "'";
   html += "}";
   /* İstemciye Gönderiliyor */
   server.send(200, "application/json", html);
   delay(100);
+}
+
+String jsonRtrn(void) {
+  /* Pin Durumları Okunuyor */
+  int durumD0 = digitalRead(D0);
+  int durumD1 = digitalRead(D1);
+  int durumD2 = digitalRead(D2);
+  int durumD3 = digitalRead(D3);
+  int durumD4 = digitalRead(D4);
+  int durumD5 = digitalRead(D5);
+  int durumD6 = digitalRead(D6);
+  int durumD7 = digitalRead(D7);
+  /* Json Yazılıyor */
+  String html = "{";
+  html += "D1:";
+  html += !durumD1 ? "true," : "false,";
+  html += "D2:";
+  html += !durumD2 ? "true," : "false,";
+  html += "D3:";
+  html += !durumD3 ? "true," : "false,";
+  html += "D4:";
+  html += !durumD4 ? "true," : "false,";
+  html += "D5:";
+  html += !durumD5 ? "true," : "false,";
+  html += "D6:";
+  html += !durumD6 ? "true," : "false,";
+  html += "D7:";
+  html += !durumD7 ? "true," : "false,";
+  html += "analog:";
+  html += (String)analogRead(A0) + ",";
+  html += "ip:";
+  html += "'" + (String)WiFi.localIP().toString() + "'";
+  html += "}";
+  /* İstemciye Gönderiliyor */
+  return html;
 }
 
 /**
@@ -253,18 +290,18 @@ void setup(void) {
     Serial.println(WiFi.localIP());
   }
 
-    dnsServer.setTTL(300);
+  dnsServer.setTTL(300);
   dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
   dnsServer.start(53, "*", IPAddress(192, 168, 4, 1));
   /*
-  Serial.println("");
-  Serial.println(ssid);
-  Serial.print(" Kablosuz Adresine Bağlandı");
-  Serial.print("IP adresi: ");
-  Serial.println(WiFi.localIP());
-  Serial.print("AP IP adresi: ");
-  Serial.println(WiFi.localIP());
-*/
+    Serial.println("");
+    Serial.println(ssid);
+    Serial.print(" Kablosuz Adresine Bağlandı");
+    Serial.print("IP adresi: ");
+    Serial.println(WiFi.localIP());
+    Serial.print("AP IP adresi: ");
+    Serial.println(WiFi.localIP());
+  */
 
   server.on("/yak", yak);
   server.on("/sondur", sondur);
@@ -294,22 +331,25 @@ unsigned long ledOncekiZaman = 0;        // Önceki Zaman Kaydediliyor Farkı Bu
 const long ledTekrarSure = 500;          // Tekrar Edilecek Saniye (milliSaniye)
 int ledDurum = KAPALI;                // Performans Açısından Böyle Uygun Gibi
 bool dnsAyarYapildi = false;
+
+
+
 void loop(void) {
   if (wifiMulti.run() != WL_CONNECTED) {
     Serial.println("WiFi Hala Bağlanamadı!");
     delay(1000);
   }
 
-  if(!dnsAyarYapildi){
-  if (wifiMulti.run() == WL_CONNECTED) {
-    /*
-  dnsServer.setTTL(300);
-  dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
-  dnsServer.start(80, "fikoyt.com", WiFi.localIP());
-  */
-  Serial.println(WiFi.localIP());
-  dnsAyarYapildi=true;
-  }
+  if (!dnsAyarYapildi) {
+    if (wifiMulti.run() == WL_CONNECTED) {
+      /*
+        dnsServer.setTTL(300);
+        dnsServer.setErrorReplyCode(DNSReplyCode::ServerFailure);
+        dnsServer.start(80, "fikoyt.com", WiFi.localIP());
+      */
+      Serial.println(WiFi.localIP());
+      dnsAyarYapildi = true;
+    }
   }
 
   /**/
