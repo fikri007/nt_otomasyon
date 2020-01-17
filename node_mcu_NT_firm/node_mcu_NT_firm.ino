@@ -240,7 +240,7 @@ void setup(void) {
   wifiMulti.addAP("NTMETAL2", "@Ntmetal@");
 
   //WiFi.mode(WIFI_AP_STA);
-  WiFi.softAP("FikoBot_Mcu_LoLin", "FikoYT1299");
+  WiFi.softAP("NT_FIKOBOT_OTOMASYON", "FikoYT1299");
 
 
   //WiFi.begin(ssid, password);
